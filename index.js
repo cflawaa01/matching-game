@@ -1,3 +1,4 @@
+var score = 0;
 const mycards = [
     {name:"angry",img:"angry.png"},
     {name:"chick",img:"chick.png"},
@@ -23,11 +24,50 @@ function makeABoard(){
         carddisplay.setAttribute("src","./public/question-mark.png");
         carddisplay.setAttribute("data-id",i);
         document.querySelector(".img-container").appendChild(carddisplay);
-        carddisplay.addEventListener("click",flip)
+      
     }
 }
 makeABoard();
-function flip(){
-    document.querySelector(`[data-id="${this.getAttribute("data-id")}"]`).src = "./public/"+`${newarray[this.getAttribute("data-id")].img}`
-
+function showCard(){
+    for(i=0;i<newarray.length;i++){
+        document.querySelector(`[data-id="${i}"]`).src = "./public/"+`${newarray[i].img}`
+    }
+    setTimeout(()=> {
+    for(i=0;i<newarray.length;i++){
+        document.querySelector(`[data-id="${i}"]`).src = "./public/question-mark.png";
+     document.querySelector(`[data-id="${i}"]`).addEventListener("click",flip,{once:true})}
+},3000)
 }
+function gameFlow(){
+    document.querySelector("button").addEventListener('click',showCard,{once : true});
+}
+let compare = [];
+
+function flip(){
+
+    document.querySelector(`[data-id="${this.getAttribute("data-id")}"]`).src = "./public/"+`${newarray[this.getAttribute("data-id")].img}`;  
+    
+    compare.push(newarray[this.getAttribute("data-id")].name);
+    
+if(compare.length == 2){
+    if(compare[0]==compare[1]){
+        console.log("right");
+        compare=[];
+        score = score + 2;
+        console.log(score);
+        document.querySelector("h1").innerText = "Your score: " + score;
+    }
+    else{
+        console.log("stop");
+        document.body.addEventListener('click',reload, {once:true});
+}
+}
+if (score == 16){
+    alert("Congrates!! King of memory!!")
+}
+}
+function reload(){
+    alert("Catch u! The game will restart ");
+    setTimeout(()=>location.reload(),3000)
+}
+gameFlow();
