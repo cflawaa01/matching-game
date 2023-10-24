@@ -36,7 +36,7 @@ function showCard(){
     for(i=0;i<newarray.length;i++){
         document.querySelector(`[data-id="${i}"]`).src = "./public/question-mark.png";
      document.querySelector(`[data-id="${i}"]`).addEventListener("click",flip,{once:true})}
-},3000)
+},4000)
 }
 function gameFlow(){
     document.querySelector("button").addEventListener('click',showCard,{once : true});
